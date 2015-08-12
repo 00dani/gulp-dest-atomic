@@ -1,0 +1,22 @@
+{
+  "name": "gulp-dest-atomic",
+  "version": "1.0.0",
+  "description": "drop-in replacement for gulp.dest that writes output atomically",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^2.9.34",
+    "defaults": "^1.0.2",
+    "fs-promise": "^0.3.1",
+    "graceful-fs": "^4.1.2",
+    "md5": "^2.0.0",
+    "mkdirp": "^0.5.1",
+    "stream-to-promise": "^1.0.4",
+    "through2": "^2.0.0"
+  },
+  "keywords": [
+    "gulpplugin",
+    "atomic"
+  ]
+}
