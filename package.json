@@ -18,5 +18,9 @@
   "keywords": [
     "gulpplugin",
     "atomic"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/00Davo/gulp-dest-atomic"
+  }
 }
