@@ -9,11 +9,13 @@ var streamToPromise = require('stream-to-promise');
 
 var temp = (function() {
     var md5 = require('md5');
+    var pathParse = require('path-parse');
+    var pathFormat = require('path-format');
     var invocations = 0;
     return function(filePath) {
-        filePath = path.parse(filePath);
+        filePath = pathParse(filePath);
         filePath.base += "." + md5(filePath.base + process.pid + (++invocations));
-        return path.format(filePath);
+        return pathFormat(filePath);
     }
 })();
 

@@ -12,6 +12,8 @@
     "graceful-fs": "^4.1.2",
     "md5": "^2.0.0",
     "mkdirp": "^0.5.1",
+    "path-format": "^1.0.0",
+    "path-parse": "^1.0.5",
     "stream-to-promise": "^1.0.4",
     "through2": "^2.0.0"
   },
