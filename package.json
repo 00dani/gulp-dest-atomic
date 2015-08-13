@@ -1,6 +1,6 @@
 {
   "name": "gulp-dest-atomic",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "drop-in replacement for gulp.dest that writes output atomically",
   "main": "index.js",
   "author": "",
