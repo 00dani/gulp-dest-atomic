@@ -19,32 +19,48 @@ var temp = (function() {
     }
 })();
 
-function writeBuffer(path, file, cb) {
+function writeBuffer(tempPath, file) {
     var opt = {mode: file.stat.mode};
-    var tempPath = temp(path);
-    fs.writeFile(tempPath, file.contents, opt).then(function() {
-        return fs.rename(tempPath, path);
-    }).catch(function(err) {
-        return fs.unlink(tempPath);
-    }).nodeify(cb);
+    return fs.writeFile(tempPath, file.contents, opt);
 };
 
-function writeStream(path, file, cb) {
+function writeStream(tempPath, file) {
     var opt = {mode: file.stat.mode};
-    var tempPath = temp(path);
     var outStream = fs.createWriteStream(tempPath, opt);
-    streamToPromise(outStream).then(function() {
-        return fs.rename(tempPath, path);
-    }).catch(function(err) {
-        return fs.unlink(tempPath);
-    }).nodeify(cb);
     file.contents.pipe(outStream);
+    return streamToPromise(outStream);
 };
 
 function writeContents(path, file, cb) {
-    if (file.isNull()) return cb(null, file);
-    if (file.isBuffer()) return writeBuffer(path, file, cb);
-    if (file.isStream()) return writeStream(path, file, cb);
+    var done = function(err) { cb(err, file); };
+    if (file.isNull()) return done();
+
+    var tempPath = temp(path), written;
+    if (file.isBuffer()) {
+        written = writeBuffer(tempPath, file);
+    } else if (file.isStream()) {
+        written = writeStream(tempPath, file);
+    }
+
+    written = written.then(function() {
+        return fs.rename(tempPath, path);
+    }).catch(function(err) {
+        return fs.unlink(tempPath).then(function() {
+            throw err;
+        });
+    });
+
+    if (file.stat && typeof file.stat.mode === 'number') {
+        written = written.then(function() {
+            return fs.stat(path);
+        }).then(function(st) {
+            if ((st.mode & 4095) !== file.stat.mode) {
+                return fs.chmod(path, file.stat.mode);
+            }
+        });
+    }
+
+    written.nodeify(done);
 };
 
 module.exports = function gulpDestAtomic(outFolder, opt) {
