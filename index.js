@@ -32,7 +32,8 @@ function writeStream(tempPath, file) {
 };
 
 function writeContents(path, file, cb) {
-    var done = function(err) { cb(err, file); };
+    var done = function() { cb(null, file); },
+        fail = function(err) { cb(err, file); };
     if (file.isNull()) return done();
 
     var tempPath = temp(path), written;
@@ -60,7 +61,7 @@ function writeContents(path, file, cb) {
         });
     }
 
-    written.nodeify(done);
+    written.then(done, fail);
 };
 
 module.exports = function gulpDestAtomic(outFolder, opt) {
