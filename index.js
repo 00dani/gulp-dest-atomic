@@ -1,7 +1,7 @@
 'use strict';
 
 var defaults = require('defaults');
-var fs = require('fs-promise');
+var fs = require('fs-extra');
 var mkdirp = require('mkdirp');
 var path = require('path');
 var through2 = require('through2');
