@@ -22,14 +22,14 @@ var temp = (function() {
 function writeBuffer(tempPath, file) {
     var opt = {mode: file.stat.mode};
     return fs.writeFile(tempPath, file.contents, opt);
-};
+}
 
 function writeStream(tempPath, file) {
     var opt = {mode: file.stat.mode};
     var outStream = fs.createWriteStream(tempPath, opt);
     file.contents.pipe(outStream);
     return streamToPromise(outStream);
-};
+}
 
 function writeContents(path, file, cb) {
     var done = function() { cb(null, file); },
@@ -62,7 +62,7 @@ function writeContents(path, file, cb) {
     }
 
     written.then(done, fail);
-};
+}
 
 module.exports = function gulpDestAtomic(outFolder, opt) {
     opt = opt || {};
