@@ -2,7 +2,6 @@
 
 var defaults = require('defaults');
 var fs = require('fs-extra');
-var mkdirp = require('mkdirp');
 var path = require('path');
 var through2 = require('through2');
 var streamToPromise = require('stream-to-promise');
@@ -100,7 +99,7 @@ module.exports = function gulpDestAtomic(outFolder, opt) {
         file.path = writePath;
 
         // mkdirp the folder the file is going in
-        mkdirp(writeFolder, function(err){
+        fs.mkdirp(writeFolder, function(err){
             if (err) return cb(err);
             writeContents(writePath, file, cb);
         });
