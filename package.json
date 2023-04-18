@@ -23,6 +23,6 @@
     "url": "https://github.com/00dani/gulp-dest-atomic"
   },
   "devDependencies": {
-    "eslint": "^6.8.0"
+    "eslint": "^8.38.0"
   }
 }
