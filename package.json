@@ -11,7 +11,7 @@
     "md5": "^2.0.0",
     "path-format": "^1.0.0",
     "path-parse": "^1.0.5",
-    "stream-to-promise": "^1.0.4",
+    "stream-to-promise": "^3.0.0",
     "through2": "^2.0.0"
   },
   "keywords": [
